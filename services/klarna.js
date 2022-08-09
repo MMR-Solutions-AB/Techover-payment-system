@@ -1,6 +1,6 @@
-const fetch = require('node-fetch')
+import fetch from 'node-fetch'
 
-function getKlarnaAuth() {
+export function getKlarnaAuth() {
     const username = process.env.PUBLIC_KEY
     const password = process.env.SECRET_KEY
     const auth =
@@ -9,7 +9,7 @@ function getKlarnaAuth() {
 }
 
 // 1. Add async createOrder function that returns Klarna response.json()
-async function createOrder(products) {
+export async function createOrder(product) {
     // Sub Parts
     const path = '/checkout/v3/orders'
     const auth = getKlarnaAuth()
@@ -33,7 +33,7 @@ async function createOrder(products) {
             {
                 type: 'physical',
                 reference: '19-402-USA',
-                name: 'Red T-Shirt',
+                name: product.name,
                 quantity: 5,
                 quantity_unit: 'pcs',
                 unit_price: 10000,
@@ -66,7 +66,7 @@ async function createOrder(products) {
     }
 }
 
-async function retrieveOrder(order_id) {
+export async function retrieveOrder(order_id) {
     // Sub Parts
     const path = '/checkout/v3/orders/' + order_id
     const auth = getKlarnaAuth()
@@ -88,5 +88,3 @@ async function retrieveOrder(order_id) {
         }
     }
 }
-
-module.exports = { getKlarnaAuth, createOrder, retrieveOrder }
