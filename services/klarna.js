@@ -22,25 +22,30 @@ export async function createOrder(product) {
         Authorization: auth,
     }
 
+    const quantity = 1
+    const price = product.price * 100
+    const total_amount = price * quantity
+    const total_tax_amount = total_amount * 0.2
+
     // The payload we send to Klarna
     const payload = {
         purchase_country: 'SE',
         purchase_currency: 'SEK',
         locale: 'sv-SE',
-        order_amount: 50000,
-        order_tax_amount: 4545,
+        order_amount: total_amount,
+        order_tax_amount: total_tax_amount,
         order_lines: [
             {
                 type: 'physical',
-                reference: '19-402-USA',
+                reference: product._id,
                 name: product.name,
-                quantity: 5,
+                quantity,
                 quantity_unit: 'pcs',
-                unit_price: 10000,
-                tax_rate: 1000,
-                total_amount: 50000,
+                unit_price: price,
+                tax_rate: 2500,
+                total_amount: total_amount,
                 total_discount_amount: 0,
-                total_tax_amount: 4545,
+                total_tax_amount,
             },
         ],
         merchant_urls: {
