@@ -10,7 +10,7 @@ app.get('/', async (req, res) => {
     const markup = products
         .map(
             (p) =>
-                `<a style="display:block;color:red;border:solid red 2px;margin: 20px; padding:10px;" href="/p/${p._id}">
+                `<a style="display:block;color:black;border:solid black 2px;margin: 20px; padding:10px;" href="/p/${p._id}">
                     ${p.name} - ${p.price}kr
                 </a>`
         )
