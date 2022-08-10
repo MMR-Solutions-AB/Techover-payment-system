@@ -9,15 +9,13 @@ export function getKlarnaAuth() {
     return auth
 }
 
-// 1. Add async createOrder function that returns Klarna response.json()
+// Skapar en order via Klarnas API
 export async function createOrder(product) {
-    // Sub Parts
     const path = '/checkout/v3/orders'
     const auth = getKlarnaAuth()
 
-    // Main Parts
     const url = process.env.BASE_URL + path
-    const method = 'POST' // GET, POST, PUT, DELETE
+    const method = 'POST'
     const headers = {
         'Content-Type': 'application/json',
         Authorization: auth,
