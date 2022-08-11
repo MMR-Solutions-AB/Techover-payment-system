@@ -1,4 +1,5 @@
-import { getProducts } from './services/api.js'
+import { createOrder } from './services/klarna.js'
+import { getProducts, getProduct } from './services/api.js'
 import express from 'express'
 const app = express()
 import { config } from 'dotenv'
@@ -18,6 +19,25 @@ app.get('/', async (_, res) => {
         .join(' ')
 
     res.send(markup)
+})
+
+app.get('/p/:product_id', async function (req, res) {
+    try {
+        // tar id:et från params, e.x för url:en '/p/abc' hade id:et varit 'abc'
+        const product_id = req.params.product_id
+        // hämtar just den produkten från vår databas
+        const product = await getProduct(product_id)
+        // skapar en order via Klarnas API
+        const klarnaJsonResponse = await createOrder(product)
+        // Klarna svarar med HTML som vi sen skickar till klienten
+        const html_snippet = klarnaJsonResponse.html_snippet
+
+        // skicka HTML koden vi fick från klarna till klienten
+        res.send(html_snippet)
+    } catch (error) {
+        // om något gick fel skickar vi fel meddelandet
+        res.send(error.message)
+    }
 })
 
 app.listen(3000)
