@@ -50,3 +50,5 @@ app.get('/confirmation', async function (req, res) {
     // skicka HTML koden vi fick från klarna till klienten
     res.send(html_snippet)
 })
+
+app.listen(3000)
