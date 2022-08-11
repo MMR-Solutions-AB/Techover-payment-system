@@ -1,4 +1,4 @@
-import { createOrder } from './services/klarna.js'
+import { createOrder, retrieveOrder } from './services/klarna.js'
 import { getProducts, getProduct } from './services/api.js'
 import express from 'express'
 const app = express()
@@ -40,4 +40,13 @@ app.get('/p/:product_id', async function (req, res) {
     }
 })
 
-app.listen(3000)
+app.get('/confirmation', async function (req, res) {
+    // tar id:et från query, e.x för url:en '/confirmation?order_id=abc' hade order_id varit 'abc'
+    const order_id = req.query.order_id
+    const klarnaJsonResponse = await retrieveOrder(order_id)
+    // Klarna svarar med HTML som vi sen skickar till klienten
+    const html_snippet = klarnaJsonResponse.html_snippet
+
+    // skicka HTML koden vi fick från klarna till klienten
+    res.send(html_snippet)
+})
