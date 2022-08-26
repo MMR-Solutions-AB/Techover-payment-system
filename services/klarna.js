@@ -1,6 +1,5 @@
 import fetch from 'node-fetch'
 
-/* 1.  */
 export function getKlarnaAuth() {
     const username = process.env.PUBLIC_KEY
     const password = process.env.SECRET_KEY
@@ -70,15 +69,13 @@ export async function createOrder(product) {
     }
 }
 
-/*  */
+// hämtar vår egna skapade order från API
 export async function retrieveOrder(order_id) {
-    // Sub Parts
     const path = '/checkout/v3/orders/' + order_id
     const auth = getKlarnaAuth()
 
-    // Main Parts
     const url = process.env.BASE_URL + path
-    const method = 'GET' // GET, POST, PUT, DELETE
+    const method = 'GET'
     const headers = { Authorization: auth }
     const response = await fetch(url, { method, headers })
 
