@@ -51,4 +51,4 @@ app.get('/confirmation', async function (req, res) {
     res.send(html_snippet)
 })
 
-app.listen(3000)
+app.listen(process.env.PORT)
